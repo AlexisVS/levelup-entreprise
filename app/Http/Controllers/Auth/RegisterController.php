@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
+use App\Models\TVA;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -74,7 +76,7 @@ class RegisterController extends Controller
         ]);
     }
 
-       /**
+    /**
      * Handle a registration request for the application.
      *
      * ? Step one
@@ -104,11 +106,59 @@ class RegisterController extends Controller
         }
     }
 
-    public function register2()
+    /**
+     * Handle a registration request for the application.
+     *
+     * ? Step two
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function register2(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'activity' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'country' => 'required',
+            'phone' => 'required',
+            'zip_code' => 'required',
+        ]);
+
+        $tva = TVA::create($request->all());
+
+        return response()->json([
+            'message' => 'Registration step 2 successful.',
+            'data' => [
+                'tva' => $tva,
+            ],
+        ], 200);
     }
 
-    public function register3()
+    /**
+     * Handle a registration request for the application.
+     *
+     * ? Step three
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function register3(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+        ]);
+
+        $contact = Contact::create($request->all());
+
+        return response()->json([
+            'message' => 'Registration step 3 successful.',
+            'data' => [
+                'contact' => $contact,
+            ],
+        ], 200);
     }
 }
