@@ -29,22 +29,6 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -82,27 +66,37 @@ class RegisterController extends Controller
      * ? Step one
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function register1(Request $request)
     {
-        $credentials = $request->validate([
+        $attr = $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        event(new Registered($user = User::create($request->all())));
+
+        event(new Registered($user = $this->create($request->all())));
 
         Auth::login($user);
+        $bearerToken = Auth::user()->createToken('bearerToken')->plainTextToken;
+        // $request->session()->regenerate();
+
+        // dd(auth()->user());
 
         if (auth()->user()) {
             return response()->json([
-                'message' => 'User registration step 1 successful'
+                'message' => 'User registration step 1 successful',
+                'data' => [
+                    'user' => $user,
+                    'bearerToken' => $bearerToken,
+                ],
             ], 200);
         } else {
             return response()->json([
-                'message' => 'Serveur has encountered an error.'
-            ], 400);
+                'message' => 'Serveur has encountered an error.',
+                'errors' => 'Mot de passe ou email invalides'
+            ], 401);
         }
     }
 
@@ -126,7 +120,17 @@ class RegisterController extends Controller
             'zip_code' => 'required',
         ]);
 
-        $tva = TVA::create($request->all());
+        $tva = TVA::create([
+            'user_id' => auth()->user()->id,
+            'name' => $request->name,
+            'activity' => $request->activity,
+            'address' => $request->address,
+            'city' => $request->city,
+            'country' => $request->country,
+            'phone' => $request->phone,
+            'zip_code' => $request->zip_code,
+        ]);
+
 
         return response()->json([
             'message' => 'Registration step 2 successful.',
@@ -152,7 +156,12 @@ class RegisterController extends Controller
             'phone' => 'required',
         ]);
 
-        $contact = Contact::create($request->all());
+        $contact = new Contact();
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->phone = $request->phone;
+        $contact->user_id = auth()->user()->id;
+        $contact->save();
 
         return response()->json([
             'message' => 'Registration step 3 successful.',

@@ -14,17 +14,13 @@ class TodoController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $todo = auth()->user()->todolists->todos;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json([
+            'data' => [
+                'todo' => $todo,
+            ],
+        ], 200);
     }
 
     /**
@@ -35,7 +31,22 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'text' => 'required',
+        ]);
+
+        $store = Todo::create([
+            'todolist_id' => auth()->user()->todolists->id,
+            'text' => $request->text,
+            'status' => 'open'
+        ]);
+
+        return response()->json([
+            'message' => 'Todo successfully created',
+            'data' => [
+                'todo' => $store
+            ]
+        ], 200);
     }
 
     /**
@@ -46,18 +57,11 @@ class TodoController extends Controller
      */
     public function show(Todo $todo)
     {
-        //
-    }
+        Todo::destroy($todo);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Todo  $todo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Todo $todo)
-    {
-        //
+        return response()->json([
+            'message' => 'Todo successfully created',
+        ], 200);
     }
 
     /**
@@ -69,7 +73,28 @@ class TodoController extends Controller
      */
     public function update(Request $request, Todo $todo)
     {
-        //
+        $todo->text = $request->text;
+        $todo->save();
+
+        return response()->json([
+            'message' => 'Todo successfully updated',
+        ], 200);
+    }
+
+    /**
+     * done the specified resource in storage.
+     *
+     * @param  \App\Models\Todo  $todo
+     * @return \Illuminate\Http\Response
+     */
+    public function done($todo)
+    {
+        $todo->status = 'done';
+        $todo->save();
+
+        return response()->json([
+            'message' => 'Todo successfully updated',
+        ], 200);
     }
 
     /**
@@ -80,6 +105,10 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
-        //
+        Todo::destroy($todo);
+
+        return response()->json([
+            'message' => 'Todo successfully destroyed.'
+        ], 200);
     }
 }
