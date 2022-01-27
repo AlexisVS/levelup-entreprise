@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\api\LoginController;
 use App\Http\Controllers\auth\LogoutController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\api\RegisterController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
@@ -24,9 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::post('/v1/register/validate-step-one', [RegisterController::class, 'register1']);
-Route::post('/v1/login', [LoginController::class, 'apiLogin']);
+Route::post('/v1/login', [LoginController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::get('/logout', [LogoutController::class, 'logout']);
@@ -36,10 +35,10 @@ Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
     Route::post('/register/validate-step-two', [RegisterController::class, 'register2']);
     Route::post('/register/validate-step-three', [RegisterController::class, 'register3']);
 
-    Route::apiResource('/todos', TodoController::class);
+    Route::apiResource('/todos', TodoController::class)->except(['store', 'update', 'destroy']);
     Route::get('/todos/{todoId}/done', [TodoController::class, 'done']);
 
     Route::get('/messages', [MessageController::class, 'index']);
-    Route::get('/messages', [MessageController::class, 'store']);
+    Route::post('/messages', [MessageController::class, 'store']);
     Route::get('/messages/{messageId}', [MessageController::class, 'update']);
 });

@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <h3 class="text-center">Welcome {{ Auth::user()->nom }}</h3>
+    <h3 class="text-center">Welcome {{ Auth::user()->email }}</h3>
 @stop
 
 @section('css')

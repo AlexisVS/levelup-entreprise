@@ -18,7 +18,7 @@ class TodoController extends Controller
 
         return response()->json([
             'data' => [
-                'todo' => $todo,
+                'todos' => $todo,
             ],
         ], 200);
     }
@@ -87,8 +87,9 @@ class TodoController extends Controller
      * @param  \App\Models\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function done($todo)
+    public function done($todoId)
     {
+        $todo = Todo::find($todoId);
         $todo->status = 'done';
         $todo->save();
 
