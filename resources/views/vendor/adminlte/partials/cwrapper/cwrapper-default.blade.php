@@ -7,7 +7,7 @@
 @endif
 
 {{-- Default Content Wrapper --}}
-<div class="content-wrapper {{ config('adminlte.classes_content_wrapper', '') }}">
+<div class="content-wrapper px-0 {{ config('adminlte.classes_content_wrapper', '') }}">
 
     {{-- Content Header --}}
     @hasSection('content_header')
@@ -19,7 +19,7 @@
     @endif
 
     {{-- Main Content --}}
-    <div class="content">
+    <div class="content px-0">
         <div class="{{ config('adminlte.classes_content') ?: $def_container_class }}">
             @yield('content')
         </div>

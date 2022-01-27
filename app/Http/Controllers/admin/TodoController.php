@@ -3,32 +3,31 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Message;
+use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class MessageController extends Controller
+class TodoController extends Controller
 {
     /**
-     * Display a listing of the resource of the all users.
-     * 
+     * Display a listing of the resource.
+     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-
         $users = User::all()->skip(1);
 
         foreach ($users as $user) {
             $user->contacts = $user->contacts;
-            $user->messages = $user->messages;
-        }
+            $user->todos = $user->todolists->todos;
+        };
 
         $data = [
-            'users' => $users
+            'users' => $users,
         ];
 
-        return view('pages.messenger', $data);
+        return view('pages.todolist', $data);
     }
 
     // /**
@@ -50,13 +49,13 @@ class MessageController extends Controller
     public function store(Request $request, $userId)
     {
         $request->validate([
-            'message' => 'required'
+            'text' => 'required'
         ]);
 
-        Message::create([
-            'user_id' => $userId,
-            'message' => $request->message,
-            'author_messsage_user_id' => 1
+        Todo::create([
+            'todolist_id' => User::find($userId)->todolists->id,
+            'text' => $request->text,
+            'status' => 'open',
         ]);
 
         return redirect()->back();

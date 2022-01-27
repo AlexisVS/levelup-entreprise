@@ -24,21 +24,22 @@ class MessageController extends Controller
             ],
         ], 200);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function adminIndex($userId)
-    {
-        $messages = User::find($userId)->messages;
 
-        return response()->json([
-            'data' => [
-                'messages' => $messages,
-            ],
-        ], 200);
-    }
+    // /**
+    //  * Display a listing of the resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function adminIndex($userId)
+    // {
+    //     $messages = User::find($userId)->messages;
+
+    //     return response()->json([
+    //         'data' => [
+    //             'messages' => $messages,
+    //         ],
+    //     ], 200);
+    // }
 
 
     /**
@@ -65,29 +66,29 @@ class MessageController extends Controller
         ], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function adminStore(Request $request, $userId)
-    {
+    // /**
+    //  * Store a newly created resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function adminStore(Request $request, $userId)
+    // {
 
-        $request->validate([
-            'message' => 'required'
-        ]);
+    //     $request->validate([
+    //         'message' => 'required'
+    //     ]);
 
-        Message::create([
-            'user_id' => $userId,
-            'message' => $request->message,
-            'author_messsage_user_id' => 1
-        ]);
+    //     Message::create([
+    //         'user_id' => $userId,
+    //         'message' => $request->message,
+    //         'author_messsage_user_id' => 1
+    //     ]);
 
-        return response()->json([
-            'message' => 'Message send.'
-        ], 200);
-    }
+    //     return response()->json([
+    //         'message' => 'Message send.'
+    //     ], 200);
+    // }
 
     /**
      * Update the last resource in storage.
@@ -117,31 +118,31 @@ class MessageController extends Controller
         ], 401);
     }
 
-    /**
-     * Update the last resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function adminUpdate(Request $request, $userId, $messageId)
-    {
-        $request->validate([
-            'message' => 'required',
-            'id' => 'required',
-        ]);
+    // /**
+    //  * Update the last resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function adminUpdate(Request $request, $userId, $messageId)
+    // {
+    //     $request->validate([
+    //         'message' => 'required',
+    //         'id' => 'required',
+    //     ]);
 
-        if (User::find($userId)->messages->last()->id == $messageId) {
-            $message = Message::find($messageId);
-            $message->message = $request->message;
-            $message->save();
+    //     if (User::find($userId)->messages->last()->id == $messageId) {
+    //         $message = Message::find($messageId);
+    //         $message->message = $request->message;
+    //         $message->save();
 
-            return response()->json([
-                'message' => 'Message successfully updated.'
-            ], 200);
-        }
+    //         return response()->json([
+    //             'message' => 'Message successfully updated.'
+    //         ], 200);
+    //     }
 
-        return response()->json([
-            'message' => 'Message not updated.'
-        ], 401);
-    }
+    //     return response()->json([
+    //         'message' => 'Message not updated.'
+    //     ], 401);
+    // }
 }

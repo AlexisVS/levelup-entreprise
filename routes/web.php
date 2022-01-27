@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\MessageController;
+use App\Http\Controllers\admin\TodoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,5 +21,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::get('/todos', [TodoController::class, 'index']);
+Route::post('/todos/{userId}', [TodoController::class, 'store']);
+
+Route::get('/messages', [MessageController::class, 'index']);
+Route::post('/messages/{userId}', [MessageController::class, 'store']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
