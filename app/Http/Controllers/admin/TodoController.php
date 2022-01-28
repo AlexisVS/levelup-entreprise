@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMailDailyUncompletedTasksUsers;
+use App\Jobs\SendMailNewTodoCreatedJob;
+use App\Mail\NewTodoReceived;
+use App\Mail\UncompletedTodoTasks;
 use App\Models\Todo;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class TodoController extends Controller
 {
@@ -57,6 +62,8 @@ class TodoController extends Controller
             'text' => $request->text,
             'status' => 'open',
         ]);
+
+        SendMailNewTodoCreatedJob::dispatch(User::find($userId));
 
         return redirect()->back();
     }

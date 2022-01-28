@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMailAccountCreatedJob;
+use App\Mail\AccountCreated;
 use App\Models\Contact;
 use App\Models\Todolist;
 use App\Models\TVA;
@@ -13,6 +15,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -167,6 +170,8 @@ class RegisterController extends Controller
         Todolist::create([
             'user_id' => auth()->user()->id,
         ]);
+
+        SendMailAccountCreatedJob::dispatch(auth()->user());
 
         return response()->json([
             'message' => 'Registration step 3 successful.',

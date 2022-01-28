@@ -20,13 +20,13 @@
         {{-- admin --}}
         <div class="d-flex align-items-start flex-column my-1">
           <p class="max-w-75 bg-light text-primary pl-3 pr-5 py-2" style="border-top-right-radius: 999px; border-bottom-right-radius: 999px">
-            {{ $message->message }}
+            {!! $message->message !!}
         </div>
         @else
         {{-- // user --}}
         <div class="d-flex align-items-end flex-column my-1">
           <p class="max-w-75 bg-primary text-white pr-3 pl-5 py-2" style="border-top-left-radius: 999px; border-bottom-left-radius: 999px">
-            {{ $message->message }}
+            {!! $message->message !!}
           </p>
         </div>
         @endif

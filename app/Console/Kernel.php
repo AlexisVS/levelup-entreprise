@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Jobs\SendMailDailyUncompletedTasksUsers;
+use App\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,6 +18,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $users = User::all()->skip(1);
+        foreach ($users as $user) {
+            $schedule->job(SendMailDailyUncompletedTasksUsers::dispatch($user))->dailyAt('21:00');
+        }
     }
 
     /**

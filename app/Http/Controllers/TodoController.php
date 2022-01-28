@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendMailNewTodoCreatedJob;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 

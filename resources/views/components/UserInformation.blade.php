@@ -39,7 +39,7 @@
                 <tbody>
                   <tr>
                     <th scope="row" class="px-xl-0">Name:</th>
-                    <td class=" pl-xl-0">{{ $user->contacts->name }}</td>
+                    <td class=" pl-xl-0">{{ $user->tvas->name }}</td>
                   </tr>
                   <tr>
                     <th scope="row" class="px-xl-0">Activity:</th>
