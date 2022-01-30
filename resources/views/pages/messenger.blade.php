@@ -13,7 +13,7 @@
 <script>
   console.log(window);
   Echo.channel(`messages.${{!! $user->id !!}}`)
-    .listen('SendMessageEvent', (e) => {
+    .listen('.SendMessageEvent', (e) => {
       console.log(['bonjour broadcasdt', e]);
     });
 

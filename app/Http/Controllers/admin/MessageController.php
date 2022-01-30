@@ -25,6 +25,7 @@ class MessageController extends Controller
             $user->messages = $user->messages;
             SendMessageEvent::dispatch($user->messages, $user->id);
             event(new SendMessageEvent($user->messages, $user->id));
+            broadcast(new SendMessageEvent($user->messages, $user->id));
         }
 
         $data = [
@@ -64,6 +65,7 @@ class MessageController extends Controller
 
         SendMessageEvent::dispatch($message, $userId);
         event(new SendMessageEvent($message, $userId));
+        broadcast(new SendMessageEvent($message, $userId));
 
         return redirect()->back();
     }

@@ -21,6 +21,7 @@ class MessageController extends Controller
 
         SendMessageEvent::dispatch($messages, auth()->user()->id);
         event(new SendMessageEvent($messages, auth()->user()->id));
+        broadcast(new SendMessageEvent($messages, auth()->user()->id));
 
         return response()->json([
             'data' => [
@@ -67,7 +68,7 @@ class MessageController extends Controller
 
         SendMessageEvent::dispatch($message, auth()->user()->id);
         event(new SendMessageEvent($message, auth()->user()->id));
-        
+        broadcast(new SendMessageEvent($message, auth()->user()->id));
 
         return response()->json([
             'message' => 'Message send.'
