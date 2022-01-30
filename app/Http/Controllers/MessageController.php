@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendMessageEvent;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,6 +18,9 @@ class MessageController extends Controller
     public function index()
     {
         $messages = auth()->user()->messages;
+
+        SendMessageEvent::dispatch($messages, auth()->user()->id);
+        event(new SendMessageEvent($messages, auth()->user()->id));
 
         return response()->json([
             'data' => [
@@ -55,11 +59,15 @@ class MessageController extends Controller
             'message' => 'required'
         ]);
 
-        Message::create([
+        $message = Message::create([
             'user_id' => auth()->user()->id,
             'message' => $request->message,
             'author_messsage_user_id' => auth()->user()->id
         ]);
+
+        SendMessageEvent::dispatch($message, auth()->user()->id);
+        event(new SendMessageEvent($message, auth()->user()->id));
+        
 
         return response()->json([
             'message' => 'Message send.'

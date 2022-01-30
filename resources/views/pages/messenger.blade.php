@@ -7,9 +7,18 @@
 @stop
 
 @section('content')
-    @foreach ($users as $user)
-        <x-messenger :user="$user"></x-messenger>
-    @endforeach
+<script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
+@foreach ($users as $user)
+<x-messenger :user="$user"></x-messenger>
+<script>
+  console.log(window);
+  Echo.channel(`messages.${{!! $user->id !!}}`)
+    .listen('SendMessageEvent', (e) => {
+      console.log(['bonjour broadcasdt', e]);
+    });
+
+</script>
+@endforeach
 @stop
 
 @section('css')
@@ -18,6 +27,5 @@
 
 @section('js')
 <script>
-
 </script>
 @stop

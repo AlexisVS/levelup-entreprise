@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Events\SendMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Models\User;
@@ -22,6 +23,8 @@ class MessageController extends Controller
         foreach ($users as $user) {
             $user->contacts = $user->contacts;
             $user->messages = $user->messages;
+            SendMessageEvent::dispatch($user->messages, $user->id);
+            event(new SendMessageEvent($user->messages, $user->id));
         }
 
         $data = [
@@ -53,11 +56,14 @@ class MessageController extends Controller
             'message' => 'required'
         ]);
 
-        Message::create([
+        $message = Message::create([
             'user_id' => $userId,
             'message' => $request->message,
             'author_messsage_user_id' => 1
         ]);
+
+        SendMessageEvent::dispatch($message, $userId);
+        event(new SendMessageEvent($message, $userId));
 
         return redirect()->back();
     }
