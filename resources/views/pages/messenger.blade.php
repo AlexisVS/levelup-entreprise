@@ -12,8 +12,8 @@
 <x-messenger :user="$user"></x-messenger>
 <script>
   console.log(window);
-  Echo.channel(`messages.${{!! $user->id !!}}`)
-    .listen('.SendMessageEvent', (e) => {
+  Echo.channel(`messages`)
+    .listen('SendMessageEvent', (e) => {
       console.log(['bonjour broadcasdt', e]);
     });
 

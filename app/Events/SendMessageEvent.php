@@ -25,8 +25,8 @@ class SendMessageEvent implements ShouldBroadcast
      */
     public function __construct($message, $userId)
     {
-        $this->message = $message;
         $this->userId = $userId;
+        $this->message = $message;
     }
 
     /**
@@ -37,7 +37,7 @@ class SendMessageEvent implements ShouldBroadcast
     public function broadcastOn()
     {
         // return new PrivateChannel('channel-name');
-        return new Channel('messages.' . $this->userId);
+        return new Channel('messages');
     }
 
     // public function broadcastAs()
@@ -50,13 +50,13 @@ class SendMessageEvent implements ShouldBroadcast
      *
      * @return array
      */
-    // public function broadcastWith()
-    // {
-    //     return [
-    //         'data' => [
-    //             'id' => $this->user->id,
-    //             'message' => $this->message,
-    //         ],
-    //     ];
-    // }
+    public function broadcastWith()
+    {
+        return [
+            'data' => [
+                'id' => $this->userId,
+                'message' => $this->message,
+            ],
+        ];
+    }
 }
