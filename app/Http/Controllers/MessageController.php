@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Events\SendMessageEvent;
 use App\Models\Message;
 use App\Models\User;
+use App\Notifications\MessageReceived;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class MessageController extends Controller
 
@@ -69,6 +71,11 @@ class MessageController extends Controller
         SendMessageEvent::dispatch($message, auth()->user()->id);
         // event(new SendMessageEvent($message, auth()->user()->id));
         // broadcast(new SendMessageEvent($message, auth()->user()->id));
+
+        // Mettre dans un join
+        User::find(1)->notify(new MessageReceived($message));
+        Notification::send(User::find(auth()->user()->id), new MessageReceived($message));
+        broadcast(new MessageReceived($message));
 
         return response()->json([
             'message' => 'Message send.'

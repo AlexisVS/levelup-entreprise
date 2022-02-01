@@ -6,7 +6,9 @@ use App\Events\SendMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Models\User;
+use App\Notifications\MessageReceived;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class MessageController extends Controller
 {
@@ -63,9 +65,15 @@ class MessageController extends Controller
             'author_messsage_user_id' => 1
         ]);
 
+
         SendMessageEvent::dispatch($message, $userId);
         // event(new SendMessageEvent($message, $userId));
         // broadcast(new SendMessageEvent($message, $userId));
+        // Mettre dans un join
+        User::find($userId)->notify(new MessageReceived($message));
+        Notification::send(User::find($userId), new MessageReceived($message));
+        broadcast(new MessageReceived($message));
+
 
         return redirect()->back();
     }
