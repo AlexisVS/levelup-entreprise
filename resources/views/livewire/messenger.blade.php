@@ -12,7 +12,7 @@
         </h2>
       </div>
 
-      <div id="collapseOne{{ $user->id }}" class="collapse" aria-labelledby="headingOne{{ $user->id }}" data-parent="#accordionExample{{ $user->id }}">
+      <div id="collapseOne{{ $user->id }}" class="collapse show" aria-labelledby="headingOne{{ $user->id }}" data-parent="#accordionExample{{ $user->id }}">
         <div class="card-body p-0">
         <x-UserInformation :user="$user"></x-UserInformation>
         <h3 class=" text-center">Messages</h3>
