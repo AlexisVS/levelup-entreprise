@@ -2,6 +2,7 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
+    "platform-check": false,
     "keywords": [
         "framework",
         "laravel"

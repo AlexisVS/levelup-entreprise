@@ -67,6 +67,7 @@ return [
      * the existing middleware. Or, you can simply stick with this list.
      */
     'middleware' => [
+        // 'auth:api', // rajouter par moi
         'web',
         Authorize::class,
     ],

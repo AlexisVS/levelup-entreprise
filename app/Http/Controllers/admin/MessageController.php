@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Events\MessageReceivedEvent;
 use App\Events\SendMessageEvent;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendMessageReceivedJob;
 use App\Models\Message;
 use App\Models\User;
 use App\Notifications\MessageReceived;
@@ -70,9 +72,11 @@ class MessageController extends Controller
         // event(new SendMessageEvent($message, $userId));
         // broadcast(new SendMessageEvent($message, $userId));
         // Mettre dans un join
-        User::find($userId)->notify(new MessageReceived($message));
-        Notification::send(User::find($userId), new MessageReceived($message));
-        broadcast(new MessageReceived($message));
+        // User::find($userId)->notify(new MessageReceived($message));
+        // Notification::send(User::find($userId), new MessageReceived($message));
+        // broadcast(new MessageReceived($message));
+        // event(new MessageReceivedEvent($message));
+        SendMessageReceivedJob::dispatch($message);
 
 
         return redirect()->back();

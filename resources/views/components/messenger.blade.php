@@ -13,24 +13,26 @@
         <x-UserInformation :user="$user"></x-UserInformation>
         <h3 class=" text-center">Messages</h3>
         <hr style="width: 75%; background-color: #ddd;">
-        @foreach($user->messages as $message)
-        @if($user->messages->count() == 0)
-        <h1 class="text-center display-4">You have no message in this discussion</h1>
-        @elseif ($message->author_messsage_user_id == $message->user_id)
-        {{-- admin --}}
-        <div class="d-flex align-items-start flex-column my-1">
-          <p class="max-w-75 bg-light text-primary pl-3 pr-5 py-2" style="border-top-right-radius: 999px; border-bottom-right-radius: 999px">
-            {!! $message->message !!}
+        <div style="max-height: 500px">
+          @foreach($user->messages as $message)
+          @if($user->messages->count() == 0)
+          <h1 class="text-center display-4">You have no message in this discussion</h1>
+          @elseif ($message->author_messsage_user_id == $message->user_id)
+          {{-- admin --}}
+          <div class="d-flex align-items-start flex-column my-1">
+            <p class="max-w-75 bg-light text-primary pl-3 pr-5 py-2" style="border-top-right-radius: 999px; border-bottom-right-radius: 999px">
+              {!! $message->message !!}
+          </div>
+          @else
+          {{-- // user --}}
+          <div class="d-flex align-items-end flex-column my-1">
+            <p class="max-w-75 bg-primary text-white pr-3 pl-5 py-2" style="border-top-left-radius: 999px; border-bottom-left-radius: 999px">
+              {!! $message->message !!}
+            </p>
+          </div>
+          @endif
+          @endforeach
         </div>
-        @else
-        {{-- // user --}}
-        <div class="d-flex align-items-end flex-column my-1">
-          <p class="max-w-75 bg-primary text-white pr-3 pl-5 py-2" style="border-top-left-radius: 999px; border-bottom-left-radius: 999px">
-            {!! $message->message !!}
-          </p>
-        </div>
-        @endif
-        @endforeach
         <form class="form-inline w-100 mt-5 mb-3" action="/messages/{{ $user->id }}" method="POST">
           @csrf
           @method('POST')

@@ -7,6 +7,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Route::post('/v1/register/validate-step-one', [RegisterController::class, 'register1']);
 Route::post('/v1/login', [LoginController::class, 'login']);

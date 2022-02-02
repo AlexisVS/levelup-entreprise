@@ -81,6 +81,10 @@ class User extends Authenticatable
      */
     public function receivesBroadcastNotificationsOn()
     {
-        return 'users.'.$this->id;
+        return 'App.Models.User.'.$this->id;
+    }
+
+    public function broadcastWith () {
+        return $this->toJson();
     }
 }
