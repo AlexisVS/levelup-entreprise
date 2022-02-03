@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\Message;
+use App\Models\Todo;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,11 +11,11 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageReceivedEvent implements ShouldBroadcast
+class TodoReceivedEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
+    public $todo;
     public $userId;
 
     /**
@@ -23,9 +23,9 @@ class MessageReceivedEvent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(Message $message, $userId)
+    public function __construct(Todo $todo, $userId)
     {
-        $this->message = $message;
+        $this->todo = $todo;
         $this->userId = $userId;
     }
 
@@ -46,6 +46,6 @@ class MessageReceivedEvent implements ShouldBroadcast
      */
     public function broadcastWith()
     {
-        return ['data' => $this->message];
+        return ['data' => $this->todo, 'type' => 'todo'];
     }
 }

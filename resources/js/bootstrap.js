@@ -1,4 +1,5 @@
 import Echo from 'laravel-echo';
+import toastr from 'toastr'
 window._ = require('lodash');
 
 try {
@@ -23,6 +24,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
 window.Pusher = require('pusher-js');
+Pusher.logToConsole = true;
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
@@ -32,9 +34,28 @@ window.Echo = new Echo({
     wsPort: 6001,
     wssPort: 6001,
     forceTLS: false,
-    disableStats: true,
+    enableStats: false,
 });
 
+// toastr.message('dsfsdfdfdfsdf')
+// toastr.success('sfddfdffsf', 'sfdfsfsdfdfdf')
 
+// window.toastr.options = {
+//   "closeButton": true,
+//   "debug": false,
+//   "newestOnTop": false,
+//   "progressBar": false,
+//   "positionClass": "toast-top-right",
+//   "preventDuplicates": false,
+//   "onclick": null,
+//   "showDuration": "300",
+//   "hideDuration": "1000",
+//   "timeOut": "5000",
+//   "extendedTimeOut": "1000",
+//   "showEasing": "swing",
+//   "hideEasing": "linear",
+//   "showMethod": "fadeIn",
+//   "hideMethod": "fadeOut"
+// }
 
 

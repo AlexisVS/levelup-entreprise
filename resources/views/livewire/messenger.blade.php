@@ -12,7 +12,7 @@
         </h2>
       </div>
 
-      <div id="collapseOne{{ $user->id }}" class="collapse show" aria-labelledby="headingOne{{ $user->id }}" data-parent="#accordionExample{{ $user->id }}">
+      <div id="collapseOne{{ $user->id }}" class="collapse" aria-labelledby="headingOne{{ $user->id }}" data-parent="#accordionExample{{ $user->id }}">
         <div class="card-body p-0">
           <x-UserInformation :user="$user"></x-UserInformation>
           <h3 class=" text-center">Messages</h3>
@@ -37,11 +37,12 @@
             @endif
             @endforeach
           </div>
-          <form class="form-inline w-100 mt-5 mb-3" action="/messages/{{ $user->id }}" method="POST">
-            @csrf
-            @method('POST')
+          <form class="form-inline w-100 mt-5 mb-3" wire:submit.prevent="submit({{ $user->id }})" method="POST">
+            {{-- @csrf
+            @method('POST') --}}
             <div class="form-group mx-sm-3 mb-2 w-100 mx-auto d-flex justify-content-center">
-              <input type="text" class="form-control" name="message" placeholder="Write a message" style="width: 78%">
+              <input type="hidden" wire:model='userId' name="userId" value="{{ $user->id }}">
+              <input type="text" wire:model.defer='message' class="form-control" name="message" placeholder="Write a message" style="width: 78%">
               <button type="submit" class="btn btn-primary ml-2">
                 <i class="fas fa-paper-plane"></i>
               </button>

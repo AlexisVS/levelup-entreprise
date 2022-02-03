@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Events\MessageReceivedEvent;
-use App\Models\Message;
+use App\Events\TodoReceivedEvent;
+use App\Models\Todo;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,20 +11,21 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendMessageReceivedJob implements ShouldQueue
+class BroadcastNewTodo implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $message;
+    public $todo;
     public $userId;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Message $message, $userId)
+    public function __construct(Todo $todo, $userId)
     {
-        $this->message = $message;
+        $this->todo = $todo;
         $this->userId = $userId;
     }
 
@@ -35,6 +36,6 @@ class SendMessageReceivedJob implements ShouldQueue
      */
     public function handle()
     {
-        event(new MessageReceivedEvent($this->message, $this->userId));
+        event(new TodoReceivedEvent($this->todo, $this->userId));
     }
 }

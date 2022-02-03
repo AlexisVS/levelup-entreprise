@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\BroadcastNewTodo;
 use App\Jobs\SendMailDailyUncompletedTasksUsers;
 use App\Jobs\SendMailNewTodoCreatedJob;
 use App\Mail\NewTodoReceived;
@@ -57,13 +58,14 @@ class TodoController extends Controller
             'text' => 'required'
         ]);
 
-        Todo::create([
+        $todo = Todo::create([
             'todolist_id' => User::find($userId)->todolists->id,
             'text' => $request->text,
             'status' => 'open',
         ]);
 
         SendMailNewTodoCreatedJob::dispatch(User::find($userId));
+        BroadcastNewTodo::dispatch($todo, $userId);
 
         return redirect()->back();
     }

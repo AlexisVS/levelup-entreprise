@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\BroadcastNewTodo;
 use App\Jobs\SendMailNewTodoCreatedJob;
 use App\Models\Todo;
 use Illuminate\Http\Request;
@@ -41,6 +42,8 @@ class TodoController extends Controller
             'text' => $request->text,
             'status' => 'open'
         ]);
+
+        // BroadcastNewTodo::dispatch($store, '1');
 
         return response()->json([
             'message' => 'Todo successfully created',

@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Events\MessageReceivedEvent;
+use App\Events\SendMessageEvent;
 use App\Models\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -11,12 +11,13 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendMessageReceivedJob implements ShouldQueue
+class BroadcastMessengerJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $message;
     public $userId;
+
     /**
      * Create a new job instance.
      *
@@ -35,6 +36,6 @@ class SendMessageReceivedJob implements ShouldQueue
      */
     public function handle()
     {
-        event(new MessageReceivedEvent($this->message, $this->userId));
+        SendMessageEvent::dispatch($this->message, $this->userId);
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Events\MessageReceivedEvent;
 use App\Events\SendMessageEvent;
+use App\Jobs\BroadcastMessengerJob;
+use App\Jobs\SendMessageReceivedJob;
 use App\Models\Message;
 use App\Models\User;
 use App\Notifications\MessageReceived;
@@ -69,16 +71,8 @@ class MessageController extends Controller
             'author_messsage_user_id' => auth()->user()->id
         ]);
 
-        SendMessageEvent::dispatch($message, auth()->user()->id);
-        // event(new SendMessageEvent($message, auth()->user()->id));
-        // broadcast(new SendMessageEvent($message, auth()->user()->id));
-        // event(new MessageReceivedEvent($message));
-
-        // Mettre dans un join
-        User::find(1)->notify(new MessageReceived($message));
-        Notification::send(User::find(auth()->user()->id), new MessageReceived($message));
-        broadcast(new MessageReceived($message));
-        event(new MessageReceivedEvent($message));
+        BroadcastMessengerJob::dispatch($message, auth()->user()->id);
+        SendMessageReceivedJob::dispatch($message, '1');
 
         return response()->json([
             'message' => 'Message send.'
