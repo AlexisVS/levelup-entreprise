@@ -12,6 +12,7 @@
 <script>
   Echo.channel(`messages`)
     .listen('SendMessageEvent', (e) => {
+      console.log('blablabla update messagfe');
       Livewire.emit('updateMessages', e.data.message)
     })
 

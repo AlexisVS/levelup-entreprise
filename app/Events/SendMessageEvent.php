@@ -37,7 +37,7 @@ class SendMessageEvent implements ShouldBroadcast
     public function broadcastOn()
     {
         // return new PrivateChannel('channel-name');
-        return new Channel('messages');
+        return new PrivateChannel('App.Models.User.' . $this->userId);
     }
 
     // public function broadcastAs()
