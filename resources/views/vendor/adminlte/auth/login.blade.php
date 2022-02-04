@@ -79,6 +79,15 @@
   </div>
 
 </form>
+
+<p>- OR -</p>
+{{-- @if(User::all()->count == 0) --}}
+  
+<a href="/auth/redirect" class="btn btn-block btn-danger">
+  <i class="fab fa-google mr-2"></i> Sign in using Google
+</a>
+{{-- @endif --}}
+
 @stop
 
 @section('auth_footer')

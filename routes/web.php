@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\MessageController;
 use App\Http\Controllers\admin\TodoController;
+use App\Http\Controllers\SocialLoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -22,14 +23,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('google')->redirect();
-});
+Route::get('/auth/redirect', [SocialLoginController::class, 'redirectToGoogle']);
 
-Route::get('/auth/callback', function () {
-    $user = Socialite::driver('google')->user();
-    // $user->token
-});
+Route::get('/auth/callback', [SocialLoginController::class, 'handleCallback']);
 
 Auth::routes();
 Broadcast::routes();
