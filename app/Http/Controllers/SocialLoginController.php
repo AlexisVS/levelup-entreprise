@@ -12,9 +12,9 @@ use Laravel\Socialite\Facades\Socialite;
 class SocialLoginController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Redire the user to google login provider.
      *
-     * @return void
+     * @return Illuminate\Http\Response
      */
     public function redirectToGoogle()
     {
@@ -22,9 +22,10 @@ class SocialLoginController extends Controller
     }
 
     /**
-     * Create a new controller instance.
+     * Take the user providing to google login provider
+     * and log in the user
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function handleCallback()
     {

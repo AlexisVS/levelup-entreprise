@@ -19,11 +19,4 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-// Broadcast::routes(['prefix' => 'api', 'middleware' => ['auth:sanctum']]);
 Broadcast::routes(['middleware' => ['web']]);
-// Broadcast::routes();
-
-
-// Broadcast::channel('messages', function ($userId) {
-//     return true;
-// });
