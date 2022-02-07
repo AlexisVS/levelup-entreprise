@@ -86,15 +86,4 @@ class MessageReceived extends Notification implements ShouldBroadcast
             'message' => 'You have received a new message',
         ]);
     }
-
-    // /**
-    //  * Get the type of the notification being broadcast.
-    //  *
-    //  * @return string
-    //  */
-    // public function broadcastType()
-    // {
-    //     return 'broadcast.message';
-    // }
-
 }

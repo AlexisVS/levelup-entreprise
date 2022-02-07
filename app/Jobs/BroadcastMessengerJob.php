@@ -17,6 +17,7 @@ class BroadcastMessengerJob implements ShouldQueue
 
     public $message;
     public $userId;
+    public $tries = 3;
 
     /**
      * Create a new job instance.

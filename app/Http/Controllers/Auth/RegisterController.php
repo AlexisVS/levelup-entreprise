@@ -81,9 +81,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
         $bearerToken = Auth::user()->createToken('bearerToken')->plainTextToken;
-        // $request->session()->regenerate();
-
-        // dd(auth()->user());
 
         if (auth()->user()) {
             return response()->json([

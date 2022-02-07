@@ -10,9 +10,6 @@
 | Todo Text | {{ $user->todolists->todos->last()->text}}
 
 @endcomponent
-{{-- @component('mail::button', ['url' => ''])
-Button Text
-@endcomponent --}}
 
 Thanks,<br>
 {{ config('app.name') }}

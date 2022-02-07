@@ -21,6 +21,8 @@ class SendMailAccountCreatedJob implements ShouldQueue
      * @var \App\Models\User
      */
     protected $user;
+    public $tries = 3;
+
 
     /**
      * Create a new job instance.

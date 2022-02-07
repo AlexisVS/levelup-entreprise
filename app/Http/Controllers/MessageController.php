@@ -24,10 +24,6 @@ class MessageController extends Controller
     {
         $messages = auth()->user()->messages;
 
-        // SendMessageEvent::dispatch($messages, auth()->user()->id);
-        // event(new SendMessageEvent($messages, auth()->user()->id));
-        // broadcast(new SendMessageEvent($messages, auth()->user()->id));
-
         return response()->json([
             'data' => [
                 'messages' => $messages,
@@ -79,30 +75,6 @@ class MessageController extends Controller
         ], 200);
     }
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function adminStore(Request $request, $userId)
-    // {
-
-    //     $request->validate([
-    //         'message' => 'required'
-    //     ]);
-
-    //     Message::create([
-    //         'user_id' => $userId,
-    //         'message' => $request->message,
-    //         'author_messsage_user_id' => 1
-    //     ]);
-
-    //     return response()->json([
-    //         'message' => 'Message send.'
-    //     ], 200);
-    // }
-
     /**
      * Update the last resource in storage.
      *
@@ -130,32 +102,4 @@ class MessageController extends Controller
             'message' => 'Message not updated.'
         ], 401);
     }
-
-    // /**
-    //  * Update the last resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function adminUpdate(Request $request, $userId, $messageId)
-    // {
-    //     $request->validate([
-    //         'message' => 'required',
-    //         'id' => 'required',
-    //     ]);
-
-    //     if (User::find($userId)->messages->last()->id == $messageId) {
-    //         $message = Message::find($messageId);
-    //         $message->message = $request->message;
-    //         $message->save();
-
-    //         return response()->json([
-    //             'message' => 'Message successfully updated.'
-    //         ], 200);
-    //     }
-
-    //     return response()->json([
-    //         'message' => 'Message not updated.'
-    //     ], 401);
-    // }
 }

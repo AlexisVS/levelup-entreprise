@@ -35,10 +35,6 @@
       console.log(['bonjour  notification', e]);
       makeAlert(e.data)
     })
-    // .listen('TodoReceivedEvent', (e) => {
-    //   console.log(['bonjour  notification todo', e]);
-    //   makeAlert(e.data)
-    // })
 
 </script>
 <div class="wrapper">

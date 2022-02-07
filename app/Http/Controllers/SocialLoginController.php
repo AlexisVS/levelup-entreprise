@@ -35,18 +35,6 @@ class SocialLoginController extends Controller
                 Auth::login($finduser);
                 return redirect('/home');
             }
-            // else {
-            //     $newUser = User::create([
-            //         'email' => $user->email,
-            //         'google_id' => $user->id,
-            //         'password' => encrypt('my-google')
-            //     ]);
-            //     Todolist::create([
-            //         'user_id' => 1,
-            //     ]);
-            //     Auth::login($newUser);
-            //     return redirect('/home');
-            // }
         } catch (Exception $e) {
             dd($e->getMessage());
         }

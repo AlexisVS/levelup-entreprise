@@ -51,17 +51,6 @@
         </div>
       </div>
     </div>
-    {{-- <script>
-      console.log(window);
-      Echo.channel(`messages`)
-      .listen('SendMessageEvent', (e) => {
-        console.log(['bonjour broadcasdt', e]);
-      });
-      
-    </script> --}}
   </div>
-
-
   @endforeach
-
 </div>

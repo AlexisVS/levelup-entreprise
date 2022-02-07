@@ -43,8 +43,6 @@ class TodoController extends Controller
             'status' => 'open'
         ]);
 
-        // BroadcastNewTodo::dispatch($store, '1');
-
         return response()->json([
             'message' => 'Todo successfully created',
             'data' => [

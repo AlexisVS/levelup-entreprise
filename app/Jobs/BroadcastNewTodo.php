@@ -17,6 +17,8 @@ class BroadcastNewTodo implements ShouldQueue
 
     public $todo;
     public $userId;
+    public $tries = 3;
+
 
     /**
      * Create a new job instance.
