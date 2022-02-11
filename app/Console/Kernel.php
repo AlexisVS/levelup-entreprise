@@ -18,12 +18,22 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+<<<<<<< HEAD
         $schedule->call(function () {
             $users = User::all()->skip(1);
+=======
+        // $schedule->command('inspire')->hourly();
+        $users = User::all()->skip(1);
+        if (Carbon::parse('21:00:00') == Carbon::parse(Carbon::now($tz = '1'))) {
+>>>>>>> parent of 4757a9b (finit)
             foreach ($users as $user) {
-                SendMailDailyUncompletedTasksUsers::dispatch($user);
+                $schedule->job(SendMailDailyUncompletedTasksUsers::dispatch($user))->dailyAt('21:00');
             }
+<<<<<<< HEAD
         })->dailyAt('21:00');
+=======
+        }
+>>>>>>> parent of 4757a9b (finit)
     }
 
     /**
