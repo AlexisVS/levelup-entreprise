@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $schedule->call(function () {
             $users = User::all()->skip(1);
 =======
@@ -36,6 +37,8 @@ class Kernel extends ConsoleKernel
         }
 >>>>>>> parent of 4757a9b (finit)
 =======
+=======
+>>>>>>> parent of 4757a9b (finit)
         // $schedule->command('inspire')->hourly();
         $users = User::all()->skip(1);
         if (Carbon::parse('21:00:00') == Carbon::parse(Carbon::now($tz = '1'))) {
@@ -43,6 +46,9 @@ class Kernel extends ConsoleKernel
                 $schedule->job(SendMailDailyUncompletedTasksUsers::dispatch($user))->dailyAt('21:00');
             }
         }
+<<<<<<< HEAD
+>>>>>>> parent of 4757a9b (finit)
+=======
 >>>>>>> parent of 4757a9b (finit)
     }
 
