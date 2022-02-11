@@ -33,9 +33,9 @@ return [
 
     // SOCIALITE
     'google' => [
-        'client_id' => env('GOOGLE_CLIENT_ID'),
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('GOOGLE_CLIENT_CALLBACK')
+        'client_id' => env('GOOGLE_CLIENT_ID', "702598827082-co6vnqgltsjb8m8gonqkugfn1sbaee9c.apps.googleusercontent.com"),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET', "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"),
+        'redirect' => env('GOOGLE_CLIENT_CALLBACK', 'http://localhost:8000/auth/callback')
     ],
 
 ];

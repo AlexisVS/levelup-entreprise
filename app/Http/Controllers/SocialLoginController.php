@@ -11,6 +11,12 @@ use Laravel\Socialite\Facades\Socialite;
 
 class SocialLoginController extends Controller
 {
+    public function __construct() {
+        $this->middleware('guest');
+    }
+
+
+
     /**
      * Redire the user to google login provider.
      *
@@ -29,15 +35,19 @@ class SocialLoginController extends Controller
      */
     public function handleCallback()
     {
-        try {
-            $user = Socialite::driver('google')->user();
+        // try {
+            $user = Socialite::driver('google')->stateless()->user();
             $finduser = User::where('email', $user->email)->first();
             if ($finduser) {
-                Auth::login($finduser);
+                User::where('email',  $user->email)->update([
+                    'google_id' => $user->id,
+                ]);
+                $correctUser = Auth::loginUsingId($finduser->id);
+                Auth::login($correctUser);
                 return redirect('/home');
             }
-        } catch (Exception $e) {
-            dd($e->getMessage());
-        }
+        // } catch (Exception $e) {
+        //     dd($e);
+        // }
     }
 }

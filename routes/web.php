@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 Route::get('/auth/redirect', [SocialLoginController::class, 'redirectToGoogle']);
 
-Route::get('/auth/callback', [SocialLoginController::class, 'handleCallback']);
+Route::any('/auth/callback', [SocialLoginController::class, 'handleCallback']);
 
 Auth::routes();
 Broadcast::routes();
