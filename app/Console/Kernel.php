@@ -18,13 +18,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
             $users = User::all()->skip(1);
             foreach ($users as $user) {
                 SendMailDailyUncompletedTasksUsers::dispatch($user);
             }
-        })->dailyAt('14:44');
+        })->dailyAt('21:00');
     }
 
     /**
